@@ -374,7 +374,7 @@ app.post('/activateQuiz', async(req, res)=>{
 		})
 		var d1 = new Date();
         var d2 = new Date(d1);
-        d2.setMinutes(d1.getSeconds() + quiz.Duration);
+        d2.setSeconds(d1.getSeconds() + quiz.Duration);
         await ActivatedQuizzes.insertOrUpdate({QuizID:quizID, AccessCode:code, Students:"", StartTime:d1, EndTime:d2})
 	    liveQuizzes[code] = {Students:{}, StartTime:d1, EndTime:d2, QuizID:req.query.quizID, QuizName:quiz.QuizName}
 	    res.status(200).json({success:true,"AccessCode":code})
