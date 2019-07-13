@@ -61,7 +61,7 @@ class signup extends Component {
             dataType: 'json',
             contentType: 'application/json',
             data: JSON.stringify({firstName:$("#firstNameBox").val(), lastName:$("#lastNameBox").val(),
-                email:$("#emailBox").val(), passwordHash:hash, userType:radioValue}),
+                email:$("#newEmailBox").val(), passwordHash:hash, userType:radioValue}),
             crossDomain: true,
             success: function (response) {
                 context.successFunction(response, radioValue);
@@ -93,8 +93,8 @@ class signup extends Component {
                             <input type="text" id="lastNameBox"/>
                         </div>
                         <div className='block'>
-                            <label htmlFor="emailBox" >Email</label>
-                            <input type="email" id="emailBox" placeholder="name@csie.ase.ro"/>
+                            <label htmlFor="newEmailBox" >Email</label>
+                            <input type="email" id="newEmailBox" placeholder="name@csie.ase.ro"/>
                         </div>
                         <div className='block'>
                             <label htmlFor="passwordBox" >Password</label>
