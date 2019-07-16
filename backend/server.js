@@ -376,7 +376,7 @@ app.post('/activateQuiz', async(req, res)=>{
         var d2 = new Date(d1);
         d2.setSeconds(d1.getSeconds() + quiz.Duration);
         await ActivatedQuizzes.insertOrUpdate({QuizID:quizID, AccessCode:code, Students:"", StartTime:d1, EndTime:d2})
-	    liveQuizzes[code] = {Students:{}, StartTime:d1, EndTime:d2, QuizID:req.query.quizID, QuizName:quiz.QuizName}
+	    liveQuizzes[code] = {Students:{}, StartTime:d1, EndTime:d2, QuizID:req.query.quizID, QuizName:quiz.QuizName, Duration:quiz.Duration}
 	    res.status(200).json({success:true,"AccessCode":code})
 	}
 	catch(e){
@@ -452,7 +452,7 @@ app.get('/nextQuestion', async (req, res)=>{
 		}
 		let currentQuestion = (await Questions.findAll({where:{ID:liveQuizzes[req.query.ac].Students[req.query.wsid].CurrentQuestion}}))[0];
 		if(currentQuestion){            
-		    res.status(200).json({Success:true, Data:currentQuestion})
+		    res.status(200).json({Success:true, Data:currentQuestion, Time:liveQuizzes[req.query.ac].Duration})
 		} else {            
 		    res.status(200).json({Success:true, Data:"Completed!"});
 		}
@@ -504,7 +504,6 @@ app.post('/postAnswer', async (req, res) => {
                 feedback = "Very good!";
             var email = await getEmailForLoggedUser(req)
             var userId;
-            console.log("feedback" + feedback);
             await Users.findOne({where:{Email:email}})
                 .then((user) => {
                     if(user)
@@ -702,7 +701,7 @@ liveQuiz_WSS.on('connection', function connection(ws){
 							ws.send(JSON.stringify({Success:true}))
 						}
 						else{
-							ws.send(JSON.stringify({Success:false,Data:"Invalid quiz ID"}))
+							ws.send(JSON.stringify({Success:false,Data:"Invalid Access Code"}))
 						}
 					return;
 					default:

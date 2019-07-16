@@ -86,26 +86,11 @@ class homepage extends Component {
 
                     <div>
                         <Row>
-                            <Col xs={6} md={4}>
+                            <Col xs={24} md={16}>
                                 <img src={imgAndreea} className="responsive" alt="Andreea Preda"/>
                                     <p>Andreea Preda</p>
                             </Col>
-                            <Col xs={6} md={4}>
-                                <img src={imgGeorge} className="responsive" alt="George Mihaila"/>
-                                    <p>George Mihaila</p>
-                            </Col>
-                            <Col xs={6} md={4}>
-                                <img src={imgCristina} className="responsive" alt="Cristina Radulescu"/>
-                                    <p>Cristina Radulescu</p>
-                            </Col>
-                            <Col xs={6} md={4}>
-                                <img src={imgVictor} className="responsive" alt="Victor Oprica"/>
-                                <p>Victor Oprica</p>
-                            </Col>
-                            <Col xs={6} md={4}>
-                                <img src={imgIoana} className="responsive" alt="Ioana Pasarin"/>
-                                <p>Ioana Pasarin</p>
-                            </Col>
+                           
                         </Row>
                     </div>
 

@@ -23,7 +23,7 @@ class CreateQuiz extends Component {
 
     constructor(props) {
         super(props);
-
+		
         this.toggle = this.toggle.bind(this);
         this.state = {
             isOpen: false,
@@ -84,68 +84,7 @@ class CreateQuiz extends Component {
                     }
                 });
             });
-        });
-
-        function getRandomIndex(items) {
-            return Math.floor(Math.random() * items.length);
-        }
-
-        function getRandomQuestions(nr) {
-            randomQuestions = "";
-            for (var i = 0; i < nr; i++) {
-                if(i == 0)
-                    randomQuestions += "[";
-                var removedItem = questionIDs.splice(getRandomIndex(questionIDs), 1);
-                randomQuestions += removedItem;
-                if(i < nr - 1)
-                    randomQuestions += ", ";
-                else
-                    randomQuestions += "]";
-            }
-        }
-
-        function refreshMyQuestions(){
-            $.get(endpoint_API + "myQuestions?sk=" + localStorage.getItem('sk'), function(data){
-                $('#qstt tbody').empty();
-                for (let i = 0; i < data.length; i++){
-                    let ht = "<tr>"
-                    ht += "<td>";
-                    ht += data[i].ID;
-                    ht += "</td>";
-                    ht += "<td>";
-                    ht += data[i].Text;
-                    ht += "</td>";
-                    ht += "<td>";
-                    ht += data[i].Answers;
-                    ht += "</td>";
-                    ht += "<td>";
-                    ht += data[i].Type;
-                    ht += "</td>";
-                    ht += "<td>";
-                    ht += data[i].CorrectAnswer;
-                    ht += "</td>";
-                    ht += "<td>";
-                    ht += data[i].Points;
-                    ht += "</td>";
-                    ht += "</tr>";
-                    $("#qstt").append(ht);
-                    questionIDs.push(data[i].ID);
-                }
-            });
-
-
-            $("#qt2").on('change', function(){
-                console.log($("#qt2").val());
-                if ($("#qt2").val() === "SingleAnswer"){
-                    $('#qt03').html("<fieldset> <label>Option 1:</label> <input type='radio' name='opt' id='a11'/> <input type='text' id='a12'/> </br> <label>Option 2:</label> <input type='radio' name='opt' id='a21'/> <input type='text' id='a22'/> </br> <label>Option 3:</label> <input type='radio' name='opt' id='a31'/> <input type='text' id='a32'/> </br> <label>Option 4:</label> <input type='radio' name='opt' id='a41'/> <input type='text' id='a42'/> </fieldset>");
-                }
-                else{
-                    $("#qt03").html("<label>Answer:</label><input type='text' id='qt000'/>");
-                }
-            });
-
-
-            $("#saveQue").on('click', function(){
+			$("#saveQue").on('click', function(){
                 let t = $("#qt2").val();
                 let ca;
                 let opt = [];
@@ -177,6 +116,69 @@ class CreateQuiz extends Component {
                     }
                 });
             });
+			$("#qt2").on('change', function(){
+                if ($("#qt2").val() === "SingleAnswer"){
+                    $('#qt03').html("<fieldset> <label>Option 1:</label> <input type='radio' name='opt' id='a11'/> <input type='text' id='a12'/> </br> <label>Option 2:</label> <input type='radio' name='opt' id='a21'/> <input type='text' id='a22'/> </br> <label>Option 3:</label> <input type='radio' name='opt' id='a31'/> <input type='text' id='a32'/> </br> <label>Option 4:</label> <input type='radio' name='opt' id='a41'/> <input type='text' id='a42'/> </fieldset>");
+                }
+                else{
+                    $("#qt03").html("<label>Answer:</label><input type='text' id='qt000'/>");
+                }
+            });
+        });
+
+        function getRandomIndex(items) {
+            return Math.floor(Math.random() * items.length);
+        }
+
+        function getRandomQuestions(nr) {
+            randomQuestions = "";
+            for (var i = 0; i < nr; i++) {
+                if(i == 0)
+                    randomQuestions += "[";
+                var removedItem = questionIDs.splice(getRandomIndex(questionIDs), 1);
+                randomQuestions += removedItem;
+                if(i < nr - 1)
+                    randomQuestions += ", ";
+                else
+                    randomQuestions += "]";
+            }
+        }
+
+        function refreshMyQuestions(){
+            $.get(endpoint_API + "myQuestions?sk=" + localStorage.getItem('sk'), function(data){
+                $('#qstt tbody').empty();
+				questionIDs = [];
+                for (let i = 0; i < data.length; i++){
+                    let ht = "<tr>"
+                    ht += "<td>";
+                    ht += data[i].ID;
+                    ht += "</td>";
+                    ht += "<td>";
+                    ht += data[i].Text;
+                    ht += "</td>";
+                    ht += "<td>";
+                    ht += data[i].Answers;
+                    ht += "</td>";
+                    ht += "<td>";
+                    ht += data[i].Type;
+                    ht += "</td>";
+                    ht += "<td>";
+                    ht += data[i].CorrectAnswer;
+                    ht += "</td>";
+                    ht += "<td>";
+                    ht += data[i].Points;
+                    ht += "</td>";
+                    ht += "</tr>";
+                    $("#qstt").append(ht);
+                    questionIDs.push(data[i].ID);
+                }
+            });
+			
+			$("createQuestionForm").trigger("reset");
+			$("#qt1").val("");
+			$('#qt2').prop('selectedIndex',0);
+			$("#qt03").html("");
+			$("#qt045").val("");
         }
     }
 
@@ -273,7 +275,7 @@ class CreateQuiz extends Component {
                 </form>
                <center>
                <h3>Create question</h3>
-                <form>
+                <form id="createQuestionForm">
                 <div className='block'>
                         <label htmlFor="qText" >Author</label>
                         <input type="text" id="qt0" disabled/>
@@ -285,6 +287,7 @@ class CreateQuiz extends Component {
                 <div className='block'>
                     <label>Type:</label>
                     <select id="qt2">
+						<option defaultValue hidden>Choose</option>
                         <option>
                             SingleAnswer
                         </option>
@@ -300,18 +303,13 @@ class CreateQuiz extends Component {
                        <label>Points</label>
                        <input type='text' id='qt045'></input>
                 </div>
-                <input className='btnClk createQBT' type="button" value="Save" id="saveQue"/>
+                <input className='btnClk createQBT' type="button" value="Save" id="saveQue" />
                 </form>
                </center>
             </div>
-
             </div>
-
         )
     }
-
-
-
 }
 
 export default CreateQuiz;
