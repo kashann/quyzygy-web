@@ -4,9 +4,7 @@ var bodyParser = require('body-parser')
 const Sequelize = require('sequelize')
 const sha256 = require('sha256')
 const WebSocket = require('ws')
-
 const Op = Sequelize.Op;
-
 const app = express();
 
 app.use(function(req, res, next) {
@@ -456,7 +454,6 @@ app.get('/nextQuestion', async (req, res)=>{
 		} else {            
 		    res.status(200).json({Success:true, Data:"Completed!"});
 		}
-		//liveQuiz_WSS.send(JSON.stringify({Success:true,Data:currentQuestion}))
 	}
 	catch(e){
 		console.warn(e)
@@ -493,7 +490,6 @@ app.post('/postAnswer', async (req, res) => {
                 totalScore += liveQuizzes[req.query.ac].Students[req.query.wsid].Answers[i].Total;
             }
             var scorePercentage = finalScore/totalScore;
-            console.log("score " + score);
             if(scorePercentage < 0.25)
                 feedback = "Very bad...";
             else if(scorePercentage < 0.5)
@@ -629,7 +625,7 @@ async function checkSecretKey(sk){
 	return false
 }
 
-app.get('/test', async (req, res)=>{
+/*app.get('/test', async (req, res)=>{
 	try{
 		var result = await getEmailForLoggedUser(req)
 		res.status(200).json({success:result})
@@ -638,7 +634,7 @@ app.get('/test', async (req, res)=>{
 		console.warn(e)
 		res.status(500).status({error:e})
 	}
-})
+})*/
 
 //#endregion
 
