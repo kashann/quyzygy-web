@@ -36,7 +36,7 @@ class profpage extends Component {
     render() {
 
         if (this.state.toStudentGrades === true) {
-            return <Redirect to='/StudentQuiz' />
+            return <Redirect to='/seeProfGrades' />
         }
         if (this.state.toMyQiuzzes === true) {
             return <Redirect to='/editQuizes' />

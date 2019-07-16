@@ -1,24 +1,11 @@
 import React, {Component} from 'react';
 import './App.css';
-import {Redirect} from 'react-router';
-import Popup from "reactjs-popup";
-import SignUp from './signup.js';
 import $ from 'jquery';
 import localStorage from 'localStorage';
 import sha256 from 'sha256';
-import {Label, FormGroup, Input} from 'reactstrap';
-
-const contentStyle = {
-    maxWidth: "600px",
-    width: "90%"
-};
-
+import {Label, FormGroup} from 'reactstrap';
 
 class signup extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     updateLocalStorage(loginData) {
         localStorage.setItem('sk', loginData["secretKey"]);
         localStorage.setItem('userType', loginData['userType']);

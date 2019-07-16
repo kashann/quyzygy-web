@@ -65,9 +65,9 @@ class studentpage extends Component {
                     <div>
                         <Form>
                             <FormGroup>
-                                <Label for="code" id='codelbl' sm={10}>Enter code</Label>
+                                <Label for="code" id='codelbl' sm={8}>Enter code</Label>
                                 <Input type="text" name="code" id="codeQ" onChange={this.handleChange}  />
-
+								<br/>
                                 <input id="btnJoin" className='btnClk' type="button" value="ENTER QUIZ" onClick={() => {
 
                                     let endpoint_LiveQuiz = "ws://127.0.0.1:8082";

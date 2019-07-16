@@ -97,8 +97,8 @@ class startQuizPage extends Component {
                     html += "Course: <b>" + data[i].CourseName + "</b></br>";
                     html += "Quiz name: " + data[i].QuizName;
                     html += "</br>Duration: " + parseInt(data[i].Duration) / 60 + "m";
-                    html += "</br><button id='" + "act" + data[i].ID + "'>Activate quiz</button>";
-                    html += "<button id='" + "start" + data[i].ID + "' disabled=\"true\">Start quiz</button>";
+                    html += "</br><button id='act" + data[i].ID + "'>Activate quiz</button>";
+                    html += "<button id='start" + data[i].ID + "' disabled=\"true\">Start quiz</button>";
                     html += "</li>";
                     html += "<div id='lq" + data[i].ID  + "'></div>"
                 }

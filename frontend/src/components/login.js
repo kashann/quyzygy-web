@@ -13,10 +13,6 @@ const contentStyle = {
 
 class login extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     componentWillMount() {
 
         var endpoint_API = "http://localhost:8080/";
@@ -96,10 +92,13 @@ class login extends Component {
                         contentStyle={contentStyle}>
                         {close => (
                             <div>
-                                <SignUp/>
-                                <a className="close" onClick={close}>
+                                <p className="close" onClick={close}>
                                     &times;
-                                </a>
+                                </p>
+								<br/>
+								<br/>
+                                <SignUp/>
+								<br/>
                             </div>
                         )}
                     </Popup>

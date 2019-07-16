@@ -7,6 +7,7 @@ import ProfPage from './components/profpage.js'
 import createQuiz from './components/createQuiz.js'
 import editQuizes from './components/editQuizes.js'
 import seeGrades from './components/seeGrades.js'
+import seeProfGrades from './components/seeProfGrades.js'
 import startQuizPage from './components/startQuizPage.js'
 
 class App extends Component {
@@ -20,8 +21,9 @@ class App extends Component {
       <Route path='/profPage' component={ProfPage}/>
       <Route path='/createQuiz' component={createQuiz}/>
       <Route path='/editQuizes' component={editQuizes}/>
-          <Route path='/SeeGrades' component={seeGrades}/>
-          <Route path='/startQuizPage' component={startQuizPage}/>
+	  <Route path='/SeeGrades' component={seeGrades}/>
+	  <Route path='/seeProfGrades' component={seeProfGrades}/>
+	  <Route path='/startQuizPage' component={startQuizPage}/>
 
       </div>
     );

@@ -14,7 +14,7 @@ import {
 } from 'reactstrap';
 
 
-export default class seeGrades extends React.Component {
+export default class seeProfGrades extends React.Component {
 
     constructor(props) {
         super(props);
@@ -36,7 +36,7 @@ export default class seeGrades extends React.Component {
         }
         return (
 
-            <div className='SeeGrades'>
+            <div className='seeProfGrades'>
 
                 <Navbar id='navbar' dark expand="md" fixed="top" height='40px'>
                     <NavbarBrand href="/">
@@ -46,7 +46,7 @@ export default class seeGrades extends React.Component {
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
                             <NavItem>
-                                <NavLink href="/studentPage">MyPage</NavLink>
+                                <NavLink href="/profpage">MyPage</NavLink>
                             </NavItem>
                             <NavItem>
                                 <NavLink href="/">Log out</NavLink>
@@ -57,14 +57,14 @@ export default class seeGrades extends React.Component {
 
 
                 <div id='gradesTable'>
-                    <h2>My Grades</h2>
+                    <h2>My Student's Grades</h2>
                     <Table responsive>
                         <thead>
                         <tr>
                             <th> Quiz ID</th>
                             <th> Quiz Name</th>
                             <th> Grade</th>
-                            <th> Feedback</th>
+                            <th> Student</th>
                             <th> Date</th>
                         </tr>
                         </thead>
@@ -82,19 +82,29 @@ export default class seeGrades extends React.Component {
         $(window).on('load', function () {
 
             $.ajax({
-                url: endpoint_API + "myGrades?sk=" + localStorage.getItem('sk'),
+                url: endpoint_API + "studGrades?sk=" + localStorage.getItem('sk'),
                 type: "GET",
                 crossDomain: true,
                 success: function (response) {
                     console.log(response);
-                    $.each(response, function (key, value) {
-                        $('tbody').append(`<tr>
-                             <td class="Quiz ID">${value.QuizID}</td>
-                             <td class="Quiz Name">${value.QuizName}</td>
-                             <td class="Grade">${value.Value}/${value.Total}</td>
-                             <td class="Feedback">${value.Feedback}</td>
-                             <td class="Date">${value.Date}</td>
-                         </tr>`);
+                    $.each(response, function (key, value) {				
+						$.ajax({
+							url: endpoint_API + "userEmail/" + value.UserID,
+							type: "GET",
+							crossDomain: true,
+							success: function (response) {
+								$('tbody').append(`<tr>
+									 <td class="Quiz ID">${value.QuizID}</td>
+									 <td class="Quiz Name">${value.QuizName}</td>
+									 <td class="Grade">${value.Value}/${value.Total}</td>
+									 <td class="Student">${response}</td>
+									 <td class="Date">${value.Date}</td>
+								 </tr>`);
+							},
+							error: function (xhr, status) {
+								alert("error");
+							}
+						});
                     })
                 },
                 error: function (xhr, status) {

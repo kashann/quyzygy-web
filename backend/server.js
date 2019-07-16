@@ -553,6 +553,52 @@ app.get('/myGrades', async(req, res) =>{
 	}
 })
 
+app.get('/studGrades', async(req, res) =>{
+	try{
+		if (!await validateUser(req)){
+			res.status(401).json({error:'Unauthorized'})
+			return
+		}
+		var quizIds = [];
+		var email = await getEmailForLoggedUser(req);		
+		await Quizzes.findAll({where:{Author:email}})
+			.then((quizzes) => {
+				if(quizzes){
+					quizzes.forEach((quiz) => {
+						quizIds.push(quiz.ID);
+					});
+				}
+				else{					
+					res.status(404).send('not found');
+				}
+			}).catch((error) => console.log(error));
+		var grades = await Grades.findAll({where:{QuizID:quizIds}});
+		res.status(200).json(grades)
+	}
+	catch(e){
+		console.warn(e)
+		res.status(500).json({error : e.message})
+	}
+})
+
+app.get('/userEmail/:uid', async(req, res) =>{
+	try{
+		await Users.findOne({where:{ID:req.params.uid}})
+            .then((user) => {
+                if(user){
+					res.status(200).send(user.email);
+				}
+				else{					
+					res.status(404).send('some user(s) not found');
+				}
+            }).catch((error) => console.log(error));
+	}
+	catch(e){
+		console.warn(e)
+		res.status(500).json({error : e.message})
+	}
+})
+
 //#endregion
 
 //#endregion
@@ -591,7 +637,6 @@ async function getEmailForLoggedUser(request){
 
 			}
 			for (var i = 0; i < existingSKs.length; i++)
-			    //if (existingSKs[i] == request.param('sk')){
 			    if (existingSKs[i] == request.query.sk){
 					return sel[j].Email
 				}

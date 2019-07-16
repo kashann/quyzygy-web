@@ -13,12 +13,6 @@ import {
     NavLink,
 } from 'reactstrap';
 
-const contentStyle = {
-    maxWidth: "600px",
-    width: "90%"
-};
-
-
 class CreateQuiz extends Component {
 
     constructor(props) {
@@ -37,7 +31,6 @@ class CreateQuiz extends Component {
 
     componentWillMount() {
         let endpoint_API = "http://localhost:8080/";
-        var json = ["1","2","3"]
         var questionIDs = [];
         var randomQuestions;
 
@@ -133,7 +126,7 @@ class CreateQuiz extends Component {
         function getRandomQuestions(nr) {
             randomQuestions = "";
             for (var i = 0; i < nr; i++) {
-                if(i == 0)
+                if(i === 0)
                     randomQuestions += "[";
                 var removedItem = questionIDs.splice(getRandomIndex(questionIDs), 1);
                 randomQuestions += removedItem;

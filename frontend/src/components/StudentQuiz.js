@@ -4,9 +4,6 @@ import logo from '../assets/logoPatrat.png';
 import './App.css';
 
 class StudentQuiz extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     componentDidMount () {
         var endpoint = "http://localhost:8080/"
@@ -20,7 +17,7 @@ class StudentQuiz extends Component {
                 console.log(data);
                 if (data.Success){
                     let question = data.Data;
-                    if (question == "Completed!"){
+                    if (question === "Completed!"){
                         console.log(question)
                         window.location = '/SeeGrades';
                         return;
@@ -37,7 +34,7 @@ class StudentQuiz extends Component {
 
         function buildAnswers(question){
             var html = "";
-            if (question.Type == "SingleAnswer"){
+            if (question.Type === "SingleAnswer"){
 
                 html += '<ul class="answerOptions">';
                 var qs = JSON.parse(question.Answers);
@@ -57,16 +54,16 @@ class StudentQuiz extends Component {
                         let value = $(this).val();
                         let score = 0;
                         let total = question.Points;
-                        if(value == question.CorrectAnswer)
+                        if(value === question.CorrectAnswer)
                             score = total;
                         answerCurrentQuestion({questionID:question.ID,answer:value,score:score,total:total});
                     });
                 }
             }
-            else if (question.Type == "MultipleAnswer"){
+            else if (question.Type === "MultipleAnswer"){
 
             }
-            else if (question.Type == "OpenAnswer"){
+            else if (question.Type === "OpenAnswer"){
                 html += '<ul class="answerOptions">';
                 html += "<p>Answer:</p><input type='text' id='ans'/>"
                 html +="<button id='ans-btn'>Answer</button>"
@@ -76,7 +73,7 @@ class StudentQuiz extends Component {
                     let value = $("#ans").val();
                     let score = 0;
                     let total = question.Points;
-                    if(value == question.CorrectAnswer)
+                    if(value === question.CorrectAnswer)
                         score = total;
                     answerCurrentQuestion({questionID:question.ID,answer:value,score:score,total:total});
                 });
@@ -115,7 +112,7 @@ class StudentQuiz extends Component {
                 </div>
                 <div id='quiz-area'>
                     <center>
-                        <h1 id="currentQuestionTitle"></h1>
+                        <h1 id="currentQuestionTitle"> </h1>
                         <div id='answer-area'></div>
                     </center>
 

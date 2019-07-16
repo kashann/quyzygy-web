@@ -2,10 +2,6 @@ import React, {Component} from 'react';
 import './App.css';
 import logo from '../assets/logo2.png';
 import imgAndreea from '../assets/andreea.png';
-import imgIoana from '../assets/ioana.png';
-import imgCristina from '../assets/cristina.png';
-import imgGeorge from '../assets/george.png';
-import imgVictor from '../assets/victor.png';
 import LogIn from './login.js';
 import {
     Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink
